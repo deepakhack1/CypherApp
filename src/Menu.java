@@ -35,27 +35,34 @@ public class Menu {
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             switch (choice) {
+                //Using extended switch to show options
                 case 1 -> {
+                    //Input file to read file
                     System.out.println("Input file");
                     String fileName = sc.next();
                     runner.fileReader = inputOutputOperations.specificInputFile(fileName);
                 }
                 case 2 -> {
+                    //Output file is for writing to file
                     System.out.println("output file");
                     String fileName = sc.next();
                     runner.fileWriter = inputOutputOperations.specificOutputFile(fileName);
                 }
                 case 3 -> {
+                    //Enter key for encryption and decryption
                     runner.key = sc.next();
                 }
                 case 4 -> {
+                    //Encryption processing
                     System.out.println("Encryption");
                     inputOutputOperations.fileParse(runner.fileReader, runner.key, runner.fileWriter, "encryption");
                 }
                 case 5 -> {
+                    //Decryption Processing
                     System.out.println("Decryption");
                     inputOutputOperations.fileParse(runner.fileReader, runner.key, runner.fileWriter, "decryption");
                 }
+                //To exit normally from program
                 case 6 -> System.exit(0);
             }
 

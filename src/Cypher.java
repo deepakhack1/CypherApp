@@ -1,4 +1,5 @@
 public class Cypher {
+    //Custom grid
     private char[][] grid = {
             {' ', 'A', 'D', 'F', 'G', 'V', 'X'},
             {'A', 'P', 'H', '0', 'Q', 'G', '6'},
@@ -15,6 +16,7 @@ public class Cypher {
         this.key = key;
     }
 
+    //Convert char to symbol from Grid
     private String charToSymbol(char c) {
         c = Character.toUpperCase(c);
         for (int row = 1; row < 7; row++) {
@@ -27,6 +29,7 @@ public class Cypher {
         return "";
     }
 
+    //Convert text to encoded String
     public String encode(String plaintext) {
         StringBuilder encodedText = new StringBuilder();
         for (char c : plaintext.toCharArray()) {
@@ -39,18 +42,7 @@ public class Cypher {
         return encodedText.toString();
     }
 
-    public String decode(String ciphertext) {
-        StringBuilder decodedText = new StringBuilder();
-        for (char c : ciphertext.toCharArray()) {
-            if (Character.isLetterOrDigit(c)) {
-                decodedText.append(charToSymbol(c));
-            } else {
-                decodedText.append(c);
-            }
-        }
-        return decodedText.toString();
-    }
-
+    //Method is creating a matrix from encoded string
     public String[][] createMatrix(String plaintext) {
         plaintext = this.key.concat(plaintext);
         int numRows = (int) Math.ceil((double) plaintext.length() / key.length());
@@ -69,6 +61,7 @@ public class Cypher {
         return matrix;
     }
 
+    //The method is transposing as alphabetical key like JAVA to AAJV
     public String[][] sortTransposeMatrix(String[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
@@ -105,6 +98,7 @@ public class Cypher {
         return transposedMatrix;
     }
 
+    //Final cipher code for show to user
     public static String cipherCode(String arr[][]) {
         String text = "";
         for (int col = 0; col < arr[0].length; col++) {
@@ -116,18 +110,20 @@ public class Cypher {
         return text;
     }
 
-
+    // Encryption processing
     public String encryption(String plaintext) {
         if (plaintext.isEmpty() || plaintext == null) {
             System.out.println("String is Empty/Null");
             return null;
         }
         Cypher cps = new Cypher(key);
+        //calling encode method to get encoded string
         String encoded = cps.encode(plaintext);
 
         System.out.println("Plaintext: " + plaintext);
         System.out.println("Encoded: " + encoded);
 
+        //Calling a createMatrix to get encoded string in Matrix
         String[][] matrix = cps.createMatrix(encoded);
         System.out.println("Matrix with Enciphered Codes:");
 
@@ -157,6 +153,7 @@ public class Cypher {
 
     }
 
+    //Decryption Processing
     public String decryption(String input) {
         Cypher cps = new Cypher(key);
         char[] charArray = input.toCharArray();
@@ -232,6 +229,7 @@ public class Cypher {
     }
 
 
+    //Convert simple matrix to matrix  as per Key
     public char[] convertMatrix(char[][] matrix, String key) {
 
 
@@ -284,6 +282,7 @@ public class Cypher {
 
     }
 
+    //Read matrix horizontally
     public static char[] readMatrixHorizontally(char[][] matrix) {
         int numRows = matrix.length;
         int numCols = matrix[0].length;
@@ -296,13 +295,11 @@ public class Cypher {
                 rowData[index++] = matrix[row][col];
             }
         }
-        String str = new String(rowData);
-
         return rowData;
     }
 
+    //Decryption of encoded string to another string
     public String decryptUsingPolybius(String ciphertext) {
-//        char[][] polybiusSquare = createPolybiusSquare();
         StringBuilder decryptedMessage = new StringBuilder();
 
         for (int i = 0; i < ciphertext.length(); i += 2) {
@@ -314,6 +311,7 @@ public class Cypher {
         return decryptedMessage.toString();
     }
 
+    //Find value for pair value from Grid
     public static String findCharFromPair(char[][] polybiusSquare, String pair) {
 
         int x = findX(polybiusSquare[0], pair.charAt(0));
@@ -322,6 +320,7 @@ public class Cypher {
         return String.valueOf(polybiusSquare[x][y]);
     }
 
+    //Find X axis value
     public static int findX(char[] row, char x) {
 
         for (int i = 0; i < row.length; i++) {
@@ -335,6 +334,7 @@ public class Cypher {
 
     }
 
+    //Find Y axis value
     public static int findY(char[] row, char x) {
 
         for (int i = 0; i < row.length; i++) {
